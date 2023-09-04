@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculo do CDB e do CDC</title>
+</head>
+
+<body>
+
+    <h1>Calculo do CDB e CDC</h1>
+
+    <p>Este site irá ajudar a calcular o <b>CDB e o CDC</b></p>
+
+    <p>* Calculo do <B>CDB</B></p>
+
+    <form id="formulario" action="#">
+        
+        <div>
+            <label for="">Valor que deseja investir(R$)</label>
+            <input id="cx-valorainvestir" type="number" placeholder="R$">
+          </div>
+
+        <div>
+            <label for="">Informe a taxa de rendimento(%)</label>
+            <input id="cx-cdb_taxa" type="number" placeholder="%">
+        </div>
+
+        <div>
+            <label for="">Informe o ano de vencimento</label>
+            <input id="cx-ano_de_vencimento" type="number" placeholder="ano">
+          </div>
+
+          <p>* Calculo do <B>CDC</B></p>
+
+          <div>
+            <label for="">Informe a taxa mensal do CDC(%)</label>
+            <input id="cx-taxa_mensal" type="number" placeholder="%">
+          </div>
+
+          <div id="botoes">
+            <input type="reset" value="Limpar">
+            <input id="btn-calcular" onclick="clique_botao_calcular()" type="submit" value="Calcular Fatura do Cartao">
+          </div>
+    </form>
+    <script>
+
+function clique_botao_calcular(){
+      const cx_valorainvestir = document.getElementById('cx-valorainvestir')
+      const cx_cdb_taxa = document.getElementById('cx-cdb_taxa')
+      const cx_ano_de_vencimento = document.getElementById('cx-ano_de_vencimento')
+      const cx_taxa_mensal = document.getElementById('cx-taxa_mensal')
+      
+      const valor_a_investir = Number(cx_valorainvestir.value)
+      const cdb_taxa = Number(cx_cdb_taxa.value)
+      const ano_de_vencimento = Number(cx_ano_de_vencimento.value)
+      const taxa_mensal = Number(cx_taxa_mensal.value)
+
+      //Calculo do CDB 
+    const tempo = (ano_de_vencimento - 2023)
+    const rendimento_do_cdb = (valor_a_investir * (cdb_taxa / 100) * tempo)
+    const valor_total_a_sacar_no_final = (valor_a_investir + rendimento_do_cdb)
+    const porcentagem_do_lucro = (cdb_taxa * tempo)
+
+    //Calculo do CDC 
+    const valor_emprestado =  valor_a_investir
+    const tempo_meses = tempo * 12
+    const juros_emprestimo = valor_emprestado * (1 + (taxa_mensal/100))**tempo_meses
+    const lucro_do_banco = (juros_emprestimo - rendimento_do_cdb)
+    const valor_total_do_emprestimmo = (valor_total_a_sacar_no_final + juros_emprestimo)
+    
+    const resultado = `**** RESULTADO CDB *****
+        \n> Valor que foi investido : (R$)${valor_a_investir}
+        \n> Rendimento :${rendimento_do_cdb}
+        \n> Valor total ao sacar : (R$) ${valor_total_a_sacar_no_final}
+        \n> Rendimento em % : ${porcentagem_do_lucro} % 
+        \n **** RESULTADO CDC ****
+        \n> total do emprestimo:(R$) ${valor_total_do_emprestimmo}
+        \n> juros do emprestimo :${juros_emprestimo}%
+        \n> Juros do CDB :${rendimento_do_cdb}%
+        \n> lucro do banco:(R$)${lucro_do_banco}
+        `
+
+      alert(resultado)
+}
+    </script>
+</body>
+</html>
